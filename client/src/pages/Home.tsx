@@ -26,6 +26,7 @@ import {
   X,
 } from "lucide-react";
 import { programs, type Program, type ProgramStatus } from "@/data/programs";
+import pitchDecks from "@/data/pitchDecks.json";
 import {
   learningItems,
   learningPhases,
@@ -336,6 +337,7 @@ export default function Home() {
             <button onClick={() => scrollTo("learning-path")}>{copy.navPath}</button>
             <button onClick={() => scrollTo("programs")}>{copy.navPrograms}</button>
             <button onClick={() => scrollTo("sources")}>{copy.navSources}</button>
+            <a className="nav-investors" href="/investors">{isArabic ? "دليل المستثمرين" : "Investor desk"}</a>
             <button className="language-switch" onClick={() => setLanguageAndRemember(isArabic ? "en" : "ar")}>{copy.switch}</button>
           </nav>
         </div>
@@ -367,6 +369,9 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="program-ticker" aria-label={isArabic ? "كل البرامج" : "All programs"}>
+          <div className="ticker-track">{[...programs, ...programs].map((program, index) => <a href={program.link} target="_blank" rel="noreferrer" key={`${program.id}-${index}`}><ProviderIcon program={program} /><span>{program.provider}</span><small>{program.primaryCategory}</small></a>)}</div>
+        </section>
         <section id="learning-path" className="learning-section section-container">
           <SectionHeading eyebrow={copy.learningEyebrow} title={copy.learningTitle} body={copy.learningBody} action={<div className="progress-label"><span>{progress}%</span><small>{isArabic ? "منجز" : "complete"}</small></div>} />
           <div className="phase-tabs" role="tablist" aria-label={copy.learningTitle}>
@@ -414,6 +419,11 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="resources" className="resources-section section-container">
+          <div className="resources-intro"><span className="eyebrow">{isArabic ? "عدة التقديم" : "Fundraising toolkit"}</span><h2>{isArabic ? "Pitch Deck قوي. Template واضح. تقديم أكثر احترافية." : "A sharper pitch deck. A clearer template. A stronger application."}</h2><p>{isArabic ? "لا تبدأ التقديم من صفحة بيضاء. استخدم نماذج Pitch Deck حقيقية لشركات أصبحت مليارية، وقوالب SaaS تساعدك على ترتيب القصة، الأرقام، ونظام المتابعة قبل التواصل مع المستثمرين." : "Do not start from a blank page. Study real decks from billion-dollar companies and use SaaS templates to structure the story, metrics, and follow-up system before reaching investors."}</p><div className="resource-actions"><a className="button button-primary" href="/investors">{isArabic ? "ابحث عن المستثمرين" : "Find investors"} <ArrowUpRight size={15} /></a><a className="button button-secondary" href={`${sourcePrograms}/tree/main/SAAS%20Toolkit`} target="_blank" rel="noreferrer">{isArabic ? "افتح كل الـ Toolkit" : "Open full toolkit"} <ExternalLink size={15} /></a></div></div>
+          <div className="deck-rail"><div className="deck-rail-head"><span>{isArabic ? "نماذج Pitch Deck" : "Pitch Deck references"}</span><small>46 startup decks</small></div><div className="deck-grid">{pitchDecks.slice(0, 8).map((deck) => <a href={deck.url} target="_blank" rel="noreferrer" key={deck.name}><strong>{deck.name}</strong><span>{deck.valuation}</span><ArrowUpRight size={14} /></a>)}</div></div>
+        </section>
+        <section id="about" className="about-section section-container"><div className="about-mark"><Sparkles size={22} /></div><div><span className="eyebrow">{isArabic ? "عن المدرب" : "About the mentor"}</span><h2>{isArabic ? "أساعد الشركات الناشئة على تحويل الفكرة إلى نظام قابل للتمويل." : "I help startups turn a promising idea into a fundable operating system."}</h2><p>{isArabic ? "أنا أحمد، مدرب ومستشار أعمل على Flow Automation Marketing وGrowth Marketing Automation. أساعد المؤسسين على بناء الأنظمة والـ Solutions، تجهيز Pitch Deck وملفات التقديم، وفهم أهم خطوات الـ Funding والتمويلات بطريقة عملية قابلة للتنفيذ." : "I am Ahmed, a trainer and consultant focused on Flow Automation Marketing and Growth Marketing Automation. I help founders build systems and solutions, prepare pitch decks and applications, and navigate the practical steps behind funding."}</p></div><div className="about-points"><span>01 · Funding readiness</span><span>02 · Systems & solutions</span><span>03 · Growth automation</span></div></section>
         <section id="sources" className="sources-section section-container">
           <div className="sources-copy"><span className="eyebrow">{copy.sourcesEyebrow}</span><h2>{copy.sourcesTitle}</h2><p>{copy.sourcesBody}</p><div className="source-links"><a href={sourceFunding} target="_blank" rel="noreferrer"><span className="source-icon"><BookOpen size={17} /></span><span><strong>{copy.openFunding}</strong><small>Startup-Funding-2025</small></span><ArrowUpRight size={16} /></a><a href={sourcePrograms} target="_blank" rel="noreferrer"><span className="source-icon coral"><Layers3 size={17} /></span><span><strong>{copy.openPrograms}</strong><small>startup-programs-2026-2027</small></span><ArrowUpRight size={16} /></a></div></div>
           <div className="maintenance-card"><div className="maintenance-icon"><Award size={20} /></div><span className="eyebrow">{copy.updateNote}</span><h3>{copy.updateBody}</h3><a href={`${sourcePrograms}#maintenance`} target="_blank" rel="noreferrer">{copy.readme} <ArrowUpRight size={15} /></a></div>
